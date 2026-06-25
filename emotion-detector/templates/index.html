@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Emotion Detector</title>
+</head>
+<body>
+
+<h1>Emotion Detector</h1>
+
+<textarea id="text" rows="5" cols="50"></textarea><br><br>
+
+<button onclick="analyze()">Analyze</button>
+
+<h3>Result:</h3>
+<pre id="result"></pre>
+
+<script>
+function analyze() {
+    const text = document.getElementById("text").value;
+
+    fetch("/emotion", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/x-www-form-urlencoded"
+        },
+        body: new URLSearchParams({
+            text: text
+        })
+    })
+    .then(res => res.json())
+    .then(data => {
+        document.getElementById("result").textContent =
+            JSON.stringify(data, null, 2);
+    });
+}
+</script>
+
+</body>
+</html>
